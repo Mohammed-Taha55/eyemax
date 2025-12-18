@@ -21,8 +21,7 @@ const reviews = [
   },
 ];
 
-// Motion presets
-const container = {
+const containerVariants = {
   hidden: {},
   visible: {
     transition: {
@@ -31,26 +30,18 @@ const container = {
   },
 };
 
-const item = {
-  hidden: {
-    opacity: 0,
-    y: 16,
-  },
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.45,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.45, ease: "easeOut" },
   },
 };
 
 const Reviews = () => {
   return (
     <section id="reviews" className="mx-auto max-w-6xl px-6 py-24">
-      
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -66,27 +57,19 @@ const Reviews = () => {
         </p>
       </motion.div>
 
-      {/* Review cards */}
       <motion.div
-        variants={container}
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         className="grid grid-cols-1 md:grid-cols-3 gap-8"
       >
-        {reviews.map((item) => (
+        {reviews.map((review) => (
           <motion.div
-            key={item.name}
-            variants={item}
-            className="
-              bg-white
-              rounded-3xl
-              p-8
-              shadow-sm
-              border border-black/5
-            "
+            key={review.name}
+            variants={itemVariants}
+            className="bg-white rounded-3xl p-8 shadow-sm border border-black/5"
           >
-            {/* Stars */}
             <div className="mb-4 flex gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
@@ -96,14 +79,12 @@ const Reviews = () => {
               ))}
             </div>
 
-            {/* Review */}
             <p className="text-gray-700 leading-relaxed">
-              “{item.review}”
+              “{review.review}”
             </p>
 
-            {/* Name */}
             <div className="mt-6 text-sm font-medium text-gray-900">
-              — {item.name}
+              — {review.name}
             </div>
           </motion.div>
         ))}
