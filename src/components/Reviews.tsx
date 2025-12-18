@@ -2,6 +2,9 @@
 
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+/* -------------------- DATA -------------------- */
 
 const reviews = [
   {
@@ -21,7 +24,9 @@ const reviews = [
   },
 ];
 
-const containerVariants = {
+/* -------------------- ANIMATIONS -------------------- */
+
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -30,23 +35,35 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
+const itemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 16,
+  },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, ease: "easeOut" },
+    transition: {
+      duration: 0.45,
+      ease: [0.16, 1, 0.3, 1], // ✅ TS-safe easing
+    },
   },
 };
+
+/* -------------------- COMPONENT -------------------- */
 
 const Reviews = () => {
   return (
     <section id="reviews" className="mx-auto max-w-6xl px-6 py-24">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className="mb-14 max-w-xl"
       >
         <h2 className="text-4xl font-semibold tracking-tight text-gray-900">
@@ -57,19 +74,21 @@ const Reviews = () => {
         </p>
       </motion.div>
 
+      {/* Reviews */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        className="grid grid-cols-1 gap-8 md:grid-cols-3"
       >
         {reviews.map((review) => (
           <motion.div
             key={review.name}
             variants={itemVariants}
-            className="bg-white rounded-3xl p-8 shadow-sm border border-black/5"
+            className="rounded-3xl border border-black/5 bg-white p-8 shadow-sm"
           >
+            {/* Stars */}
             <div className="mb-4 flex gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
@@ -79,10 +98,12 @@ const Reviews = () => {
               ))}
             </div>
 
-            <p className="text-gray-700 leading-relaxed">
+            {/* Review text */}
+            <p className="leading-relaxed text-gray-700">
               “{review.review}”
             </p>
 
+            {/* Name */}
             <div className="mt-6 text-sm font-medium text-gray-900">
               — {review.name}
             </div>
@@ -94,3 +115,4 @@ const Reviews = () => {
 };
 
 export default Reviews;
+
