@@ -2,6 +2,9 @@
 
 import { ShieldCheck, RefreshCcw, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+/* -------------------- DATA -------------------- */
 
 const services = [
   {
@@ -24,8 +27,9 @@ const services = [
   },
 ];
 
-// Motion presets
-const container = {
+/* -------------------- ANIMATIONS -------------------- */
+
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -34,7 +38,7 @@ const container = {
   },
 };
 
-const item = {
+const itemVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 18,
@@ -44,21 +48,25 @@ const item = {
     y: 0,
     transition: {
       duration: 0.45,
-      ease: "easeOut",
+      ease: [0.16, 1, 0.3, 1], // ✅ TS-safe easing
     },
   },
 };
 
+/* -------------------- COMPONENT -------------------- */
+
 const Services = () => {
   return (
     <section id="services" className="mx-auto max-w-6xl px-6 py-24">
-      
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className="mb-14 max-w-xl"
       >
         <h2 className="text-4xl font-semibold tracking-tight text-gray-900">
@@ -71,25 +79,17 @@ const Services = () => {
 
       {/* Cards */}
       <motion.div
-        variants={container}
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        className="grid grid-cols-1 gap-8 md:grid-cols-3"
       >
         {services.map((service) => (
           <motion.div
             key={service.title}
-            variants={item}
-            className="
-              rounded-3xl
-              bg-white
-              p-8
-              shadow-sm
-              border border-black/5
-              transition
-              hover:shadow-md
-            "
+            variants={itemVariants}
+            className="rounded-3xl border border-black/5 bg-white p-8 shadow-sm transition hover:shadow-md"
           >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-black/5">
               <service.icon className="h-6 w-6 text-gray-900" />
@@ -99,7 +99,7 @@ const Services = () => {
               {service.title}
             </h3>
 
-            <p className="mt-3 text-gray-600 leading-relaxed">
+            <p className="mt-3 leading-relaxed text-gray-600">
               {service.description}
             </p>
           </motion.div>
