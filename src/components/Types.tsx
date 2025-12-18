@@ -3,44 +3,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+/* -------------------- DATA -------------------- */
 
 const types = [
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/geometric.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/round.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/square.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/rectangle.gif",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/Wayfarer.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/hexagonal.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/HalfRim.webp",
-  },
-  {
-    image:
-      "https://chashmah.com/wp-content/uploads/2025/02/rimless.webp",
-  },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/geometric.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/round.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/square.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/rectangle.gif" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/Wayfarer.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/hexagonal.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/HalfRim.webp" },
+  { image: "https://chashmah.com/wp-content/uploads/2025/02/rimless.webp" },
 ];
 
-// Motion presets (local to this file for clarity)
-const container = {
+/* -------------------- ANIMATIONS -------------------- */
+
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -49,7 +29,7 @@ const container = {
   },
 };
 
-const item = {
+const itemVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 20,
@@ -59,10 +39,12 @@ const item = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: [0.16, 1, 0.3, 1], // ✅ TS-safe easing
     },
   },
 };
+
+/* -------------------- COMPONENT -------------------- */
 
 const Types = () => {
   return (
@@ -72,7 +54,10 @@ const Types = () => {
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className="mb-14 max-w-xl"
       >
         <h2 className="text-4xl font-semibold tracking-tight text-gray-900">
@@ -85,14 +70,14 @@ const Types = () => {
 
       {/* Grid */}
       <motion.div
-        variants={container}
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8"
+        className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4"
       >
         {types.map((type, index) => (
-          <motion.div key={index} variants={item}>
+          <motion.div key={index} variants={itemVariants}>
             <Link
               href="/"
               className="group relative overflow-hidden rounded-3xl bg-white shadow-sm"
@@ -115,4 +100,3 @@ const Types = () => {
 };
 
 export default Types;
-
