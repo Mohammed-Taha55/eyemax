@@ -15,10 +15,10 @@ const reviews = [
   {
     name: "Abdul",
     review:
-      "Very professional eye testing and quick delivery. The quality of lenses is outstanding.",
+      "premium and trenddy collection with durable glasses.",
   },
   {
-    name: "Karan",
+    name: "Kartik",
     review:
       "Affordable prices and lifetime free service is a big plus. Highly recommended optical store.",
   },
