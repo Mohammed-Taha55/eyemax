@@ -50,7 +50,7 @@ const Hero = () => {
         >
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-black/10 to-transparent" />
           <Image
-            src="/store.webp"
+            src="/store2.png"
             alt="Eyemax Optical Store interior"
             width={600}
             height={720}
